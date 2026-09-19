@@ -1,5 +1,6 @@
 import React from "react";
-import { SafeAreaView, ScrollView, View, Text, StyleSheet, StatusBar } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { ScrollView, View, Text, StyleSheet, StatusBar } from "react-native";
 import { BG, SURFACE, SANGRIA, CORNFLOWER, INK, INK_SOFT, LINE } from "./theme";
 
 const days = ["Sen", "Sel", "Rab", "Kam", "Jum", "Sab", "Min"];
@@ -11,7 +12,7 @@ const schedule = [
   { task: "Belanja", marks: ["", "", "", "", "", "coral", ""] },
 ];
 
-const colorMap = {
+const colorMap: Record<string, string> = {
   mint: "#6FA97F",
   coral: "#C23B32",
   navy: CORNFLOWER,

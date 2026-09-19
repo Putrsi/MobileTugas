@@ -1,13 +1,6 @@
 import React, { useState } from "react";
-import {
-  SafeAreaView,
-  ScrollView,
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  StatusBar,
-} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { ScrollView, View, Text, StyleSheet, StatusBar, TouchableOpacity } from "react-native";
 import { BG, SURFACE, SANGRIA, SANGRIA_DEEP, CORNFLOWER, INK, INK_SOFT, LINE } from "./theme";
 
 const family = [
@@ -27,7 +20,7 @@ export default function Beranda() {
   const [activeMember, setActiveMember] = useState("ay");
   const [tasks, setTasks] = useState(initialTasks);
 
-  const toggleTask = (id) => {
+  const toggleTask = (id: number) => {
     setTasks((prev) => prev.map((t) => (t.id === id ? { ...t, done: !t.done } : t)));
   };
 

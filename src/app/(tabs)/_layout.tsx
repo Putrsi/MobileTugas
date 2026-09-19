@@ -1,6 +1,7 @@
 
 import { Tabs } from "expo-router";
-import { View, StyleSheet } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { ScrollView, View, Text, StyleSheet, StatusBar, ColorValue } from "react-native";
 import { SURFACE, SANGRIA, LINE, INK_SOFT } from "./theme";
 
 export default function TabLayout() {
@@ -53,7 +54,7 @@ export default function TabLayout() {
   );
 }
 
-function Dot({ color }: { color: string }) {
+function Dot({ color }: { color: ColorValue }) {
   return <View style={[styles.dot, { backgroundColor: color }]} />;
 }
 
