@@ -1,14 +1,9 @@
-// app/_layout.tsx
-// REPLACE root layout yang lama.
-// Tambahan: kalau user udah login tapi belum punya family_id,
-// dilempar ke /join-family dulu sebelum boleh masuk ke (tabs).
-
-import React from "react";
 import { Slot, useRouter, useSegments } from "expo-router";
-import { View, ActivityIndicator } from "react-native";
+import React from "react";
+import { ActivityIndicator, View } from "react-native";
 import { AuthProvider, useAuth } from "../contexts/AuthContext";
 import { ThemeProvider } from "../contexts/ThemeContext";
-import { BG, SANGRIA } from "./(tabs)/theme";
+import { BG, SANGRIA } from "../lib/_theme";
 
 function Gatekeeper({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth();
@@ -34,7 +29,14 @@ function Gatekeeper({ children }: { children: React.ReactNode }) {
 
   if (loading) {
     return (
-      <View style={{ flex: 1, backgroundColor: BG, alignItems: "center", justifyContent: "center" }}>
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: BG,
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
         <ActivityIndicator size="large" color={SANGRIA} />
       </View>
     );

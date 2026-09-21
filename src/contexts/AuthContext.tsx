@@ -1,6 +1,3 @@
-// contexts/AuthContext.tsx
-// REPLACE isi file AuthContext.tsx yang lama dengan ini.
-// Tambahan: family_id di profil user, plus createFamily() & joinFamily()
 
 import React, { createContext, useContext, useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -21,6 +18,7 @@ type AuthContextType = {
   unlockTheme: (themeId: string) => Promise<void>;
   createFamily: (name: string) => Promise<string>; // return kode grup yang baru dibuat
   joinFamily: (code: string) => Promise<void>;
+    updatePassword: (newPassword: string) => Promise<void>;
 };
 
 const SESSION_KEY = "rumahtugas_session_username";
@@ -105,6 +103,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setUser(null);
   };
 
+    const updatePassword = async (newPassword: string) => {
+    if (!user) throw new Error("NOT_LOGGED_IN");
+    const { error } = await supabase
+      .from("users")
+      .update({ password: newPassword })
+      .eq("username", user.username);
+    if (error) throw new Error("UPDATE_FAILED");
+  };
+
   const unlockTheme = async (themeId: string) => {
     if (!user) return;
     const updated = Array.from(new Set([...user.unlocked_themes, themeId]));
@@ -123,11 +130,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const code = generateCode();
     const { data: family, error: famErr } = await supabase
       .from("families")
-      .insert({ name, code })
+      .insert({ name, code, created_by: user.username })
       .select()
       .single();
 
-    if (famErr || !family) throw new Error("CREATE_FAILED");
+    if (famErr || !family) {
+      console.log("ERROR BIKIN FAMILY:", famErr);
+      throw new Error("CREATE_FAILED");
+    }
 
     const { error: userErr } = await supabase
       .from("users")
@@ -163,7 +173,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <AuthContext.Provider
-      value={{ user, loading, login, signup, logout, unlockTheme, createFamily, joinFamily }}
+      value={{ user, loading, login, signup, logout, unlockTheme, createFamily, joinFamily, updatePassword }}
     >
       {children}
     </AuthContext.Provider>

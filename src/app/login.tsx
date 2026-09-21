@@ -1,20 +1,26 @@
-
-import React, { useState } from "react";
+import { useState } from "react";
 import {
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
   SafeAreaView,
-  View,
+  StatusBar,
+  StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
-  StyleSheet,
-  StatusBar,
-  KeyboardAvoidingView,
-  Platform,
-  Alert,
+  View,
 } from "react-native";
-import { router } from "expo-router";
 import { useAuth } from "../contexts/AuthContext";
-import { BG, SURFACE, SANGRIA, CORNFLOWER, INK, INK_SOFT, LINE } from "./(tabs)/theme";
+import {
+  BG,
+  CORNFLOWER,
+  INK,
+  INK_SOFT,
+  LINE,
+  SANGRIA,
+  SURFACE,
+} from "../lib/_theme";
 
 export default function Login() {
   const { login, signup } = useAuth();
@@ -82,7 +88,11 @@ export default function Login() {
             />
           </View>
 
-          <TouchableOpacity style={styles.submitBtn} onPress={handleSubmit} disabled={busy}>
+          <TouchableOpacity
+            style={styles.submitBtn}
+            onPress={handleSubmit}
+            disabled={busy}
+          >
             <Text style={styles.submitText}>
               {busy ? "Memproses..." : isSignup ? "Daftar" : "Masuk"}
             </Text>
@@ -90,7 +100,9 @@ export default function Login() {
 
           <TouchableOpacity onPress={() => setIsSignup(!isSignup)}>
             <Text style={styles.switchText}>
-              {isSignup ? "Sudah punya akun? Masuk" : "Belum punya akun? Daftar"}
+              {isSignup
+                ? "Sudah punya akun? Masuk"
+                : "Belum punya akun? Daftar"}
             </Text>
           </TouchableOpacity>
         </View>
@@ -115,10 +127,27 @@ function terjemahkanError(code: string) {
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: BG },
   content: { flex: 1, justifyContent: "center", paddingHorizontal: 28 },
-  brand: { fontSize: 14, fontWeight: "700", color: CORNFLOWER, marginBottom: 6, textAlign: "center" },
-  title: { fontSize: 22, fontWeight: "700", color: INK, marginBottom: 28, textAlign: "center" },
+  brand: {
+    fontSize: 14,
+    fontWeight: "700",
+    color: CORNFLOWER,
+    marginBottom: 6,
+    textAlign: "center",
+  },
+  title: {
+    fontSize: 22,
+    fontWeight: "700",
+    color: INK,
+    marginBottom: 28,
+    textAlign: "center",
+  },
   field: { marginBottom: 16 },
-  label: { fontSize: 12.5, color: INK_SOFT, marginBottom: 6, fontWeight: "500" },
+  label: {
+    fontSize: 12.5,
+    color: INK_SOFT,
+    marginBottom: 6,
+    fontWeight: "500",
+  },
   input: {
     backgroundColor: SURFACE,
     borderWidth: 1,
@@ -137,5 +166,11 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   submitText: { color: "#fff", fontWeight: "700", fontSize: 14 },
-  switchText: { color: CORNFLOWER, fontSize: 12.5, textAlign: "center", marginTop: 18, fontWeight: "600" },
+  switchText: {
+    color: CORNFLOWER,
+    fontSize: 12.5,
+    textAlign: "center",
+    marginTop: 18,
+    fontWeight: "600",
+  },
 });

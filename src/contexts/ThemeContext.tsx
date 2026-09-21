@@ -1,7 +1,6 @@
-
 import React, { createContext, useContext, useState } from "react";
+import { ThemeId, themes } from "../lib/_theme";
 import { useAuth } from "./AuthContext";
-import { themes, ThemeId } from "../app/(tabs)/theme";
 
 type ThemeContextType = {
   activeThemeId: ThemeId;
@@ -28,7 +27,12 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <ThemeContext.Provider
-      value={{ activeThemeId, setActiveThemeId, isUnlocked, colors: themes[activeThemeId] }}
+      value={{
+        activeThemeId,
+        setActiveThemeId,
+        isUnlocked,
+        colors: themes[activeThemeId],
+      }}
     >
       {children}
     </ThemeContext.Provider>

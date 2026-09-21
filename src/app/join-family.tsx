@@ -1,20 +1,27 @@
-
-import React, { useState } from "react";
+import { router } from "expo-router";
+import { useState } from "react";
 import {
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
   SafeAreaView,
-  View,
+  StatusBar,
+  StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
-  StyleSheet,
-  StatusBar,
-  KeyboardAvoidingView,
-  Platform,
-  Alert,
+  View,
 } from "react-native";
-import { router } from "expo-router";
 import { useAuth } from "../contexts/AuthContext";
-import { BG, SURFACE, SANGRIA, CORNFLOWER, INK, INK_SOFT, LINE } from "./(tabs)/theme";
+import {
+  BG,
+  CORNFLOWER,
+  INK,
+  INK_SOFT,
+  LINE,
+  SANGRIA,
+  SURFACE,
+} from "../lib/_theme";
 
 export default function JoinFamily() {
   const { createFamily, joinFamily } = useAuth();
@@ -34,7 +41,7 @@ export default function JoinFamily() {
       Alert.alert(
         "Grup dibuat!",
         `Kode grup kamu: ${generatedCode}\n\nBagikan kode ini ke anggota keluarga lain biar mereka bisa gabung.`,
-        [{ text: "Lanjut", onPress: () => router.replace("/(tabs)") }]
+        [{ text: "Lanjut", onPress: () => router.replace("/(tabs)") }],
       );
     } catch {
       Alert.alert("Gagal", "Coba lagi ya.");
@@ -55,7 +62,9 @@ export default function JoinFamily() {
     } catch (err: any) {
       Alert.alert(
         "Gagal",
-        err.message === "CODE_NOT_FOUND" ? "Kode grup tidak ditemukan." : "Coba lagi ya."
+        err.message === "CODE_NOT_FOUND"
+          ? "Kode grup tidak ditemukan."
+          : "Coba lagi ya.",
       );
     } finally {
       setBusy(false);
@@ -65,7 +74,10 @@ export default function JoinFamily() {
   return (
     <SafeAreaView style={styles.safe}>
       <StatusBar barStyle="light-content" backgroundColor={BG} />
-      <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : undefined} style={{ flex: 1 }}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : undefined}
+        style={{ flex: 1 }}
+      >
         <View style={styles.content}>
           <Text style={styles.brand}>RumahTugas</Text>
 
@@ -73,17 +85,28 @@ export default function JoinFamily() {
             <>
               <Text style={styles.title}>Kamu belum punya grup keluarga</Text>
               <Text style={styles.subtitle}>
-                Bikin grup baru buat keluargamu, atau gabung pakai kode yang dikasih anggota lain.
+                Bikin grup baru buat keluargamu, atau gabung pakai kode yang
+                dikasih anggota lain.
               </Text>
 
-              <TouchableOpacity style={styles.optionCard} onPress={() => setMode("buat")}>
+              <TouchableOpacity
+                style={styles.optionCard}
+                onPress={() => setMode("buat")}
+              >
                 <Text style={styles.optionTitle}>Buat grup baru</Text>
-                <Text style={styles.optionDesc}>Kamu jadi admin, dapat kode buat diundang ke keluarga</Text>
+                <Text style={styles.optionDesc}>
+                  Kamu jadi admin, dapat kode buat diundang ke keluarga
+                </Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={styles.optionCard} onPress={() => setMode("gabung")}>
+              <TouchableOpacity
+                style={styles.optionCard}
+                onPress={() => setMode("gabung")}
+              >
                 <Text style={styles.optionTitle}>Gabung grup yang ada</Text>
-                <Text style={styles.optionDesc}>Masukkan kode dari anggota keluarga kamu</Text>
+                <Text style={styles.optionDesc}>
+                  Masukkan kode dari anggota keluarga kamu
+                </Text>
               </TouchableOpacity>
             </>
           )}
@@ -101,8 +124,14 @@ export default function JoinFamily() {
                   onChangeText={setName}
                 />
               </View>
-              <TouchableOpacity style={styles.submitBtn} onPress={handleCreate} disabled={busy}>
-                <Text style={styles.submitText}>{busy ? "Memproses..." : "Buat grup"}</Text>
+              <TouchableOpacity
+                style={styles.submitBtn}
+                onPress={handleCreate}
+                disabled={busy}
+              >
+                <Text style={styles.submitText}>
+                  {busy ? "Memproses..." : "Buat grup"}
+                </Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={() => setMode("pilih")}>
                 <Text style={styles.switchText}>‹ Kembali</Text>
@@ -124,8 +153,14 @@ export default function JoinFamily() {
                   onChangeText={setCode}
                 />
               </View>
-              <TouchableOpacity style={styles.submitBtn} onPress={handleJoin} disabled={busy}>
-                <Text style={styles.submitText}>{busy ? "Memproses..." : "Gabung"}</Text>
+              <TouchableOpacity
+                style={styles.submitBtn}
+                onPress={handleJoin}
+                disabled={busy}
+              >
+                <Text style={styles.submitText}>
+                  {busy ? "Memproses..." : "Gabung"}
+                </Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={() => setMode("pilih")}>
                 <Text style={styles.switchText}>‹ Kembali</Text>
@@ -141,9 +176,27 @@ export default function JoinFamily() {
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: BG },
   content: { flex: 1, justifyContent: "center", paddingHorizontal: 28 },
-  brand: { fontSize: 14, fontWeight: "700", color: CORNFLOWER, marginBottom: 6, textAlign: "center" },
-  title: { fontSize: 20, fontWeight: "700", color: INK, marginBottom: 8, textAlign: "center" },
-  subtitle: { fontSize: 12.5, color: INK_SOFT, textAlign: "center", marginBottom: 24, lineHeight: 18 },
+  brand: {
+    fontSize: 14,
+    fontWeight: "700",
+    color: CORNFLOWER,
+    marginBottom: 6,
+    textAlign: "center",
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: "700",
+    color: INK,
+    marginBottom: 8,
+    textAlign: "center",
+  },
+  subtitle: {
+    fontSize: 12.5,
+    color: INK_SOFT,
+    textAlign: "center",
+    marginBottom: 24,
+    lineHeight: 18,
+  },
   optionCard: {
     backgroundColor: SURFACE,
     borderWidth: 1,
@@ -152,10 +205,20 @@ const styles = StyleSheet.create({
     padding: 16,
     marginBottom: 12,
   },
-  optionTitle: { fontSize: 14.5, fontWeight: "700", color: INK, marginBottom: 4 },
+  optionTitle: {
+    fontSize: 14.5,
+    fontWeight: "700",
+    color: INK,
+    marginBottom: 4,
+  },
   optionDesc: { fontSize: 12, color: INK_SOFT, lineHeight: 17 },
   field: { marginBottom: 16 },
-  label: { fontSize: 12.5, color: INK_SOFT, marginBottom: 6, fontWeight: "500" },
+  label: {
+    fontSize: 12.5,
+    color: INK_SOFT,
+    marginBottom: 6,
+    fontWeight: "500",
+  },
   input: {
     backgroundColor: SURFACE,
     borderWidth: 1,
@@ -174,5 +237,11 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   submitText: { color: "#fff", fontWeight: "700", fontSize: 14 },
-  switchText: { color: CORNFLOWER, fontSize: 12.5, textAlign: "center", marginTop: 18, fontWeight: "600" },
+  switchText: {
+    color: CORNFLOWER,
+    fontSize: 12.5,
+    textAlign: "center",
+    marginTop: 18,
+    fontWeight: "600",
+  },
 });
